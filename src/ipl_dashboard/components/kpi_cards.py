@@ -8,111 +8,164 @@ from ipl_dashboard.metrics import (
 )
 
 
-def card(title, value, icon, glow):
+def _short(value, limit=18):
 
-    html = f"""
-<div style="
-position:relative;
-background:linear-gradient(145deg,#111827,#091221);
-border:1px solid rgba(255,255,255,.06);
-border-radius:24px;
-padding:24px;
-height:170px;
-overflow:hidden;
-box-shadow:0 12px 40px rgba(0,0,0,.35);
-">
+    value = str(value)
 
-<div style="
-position:absolute;
-top:-40px;
-right:-40px;
-width:140px;
-height:140px;
-background:{glow};
-filter:blur(70px);
-opacity:.45;
-border-radius:50%;
-">
-</div>
+    if len(value) <= limit:
+        return value
 
-<div style="
-font-size:30px;
-position:relative;
-z-index:2;
-">
+    return value[:limit] + "..."
+
+
+def card(icon, title, value):
+
+    st.markdown(
+        f"""
+<div class="metric-card">
+
+<div class="metric-icon">
 {icon}
 </div>
 
-<div style="
-margin-top:18px;
-color:#8fa4c7;
-font-size:13px;
-letter-spacing:1px;
-text-transform:uppercase;
-position:relative;
-z-index:2;
-">
+<div class="metric-title">
 {title}
 </div>
 
-<div style="
-margin-top:10px;
-font-size:36px;
-font-weight:800;
-color:white;
-position:relative;
-z-index:2;
-word-wrap:break-word;
-">
+<div class="metric-value">
 {value}
 </div>
 
 </div>
-"""
-
-    st.markdown(
-        html,
+""",
         unsafe_allow_html=True,
     )
 
 
 def render_kpi_cards(matches):
 
+    st.markdown(
+        """
+<style>
+
+.metric-card{
+
+background:
+linear-gradient(
+145deg,
+rgba(15,23,42,.98),
+rgba(4,10,22,.96)
+);
+
+border:
+1px solid rgba(255,255,255,.06);
+
+border-radius:24px;
+
+padding:22px;
+
+min-height:170px;
+
+display:flex;
+
+flex-direction:column;
+
+justify-content:center;
+
+overflow:hidden;
+
+}
+
+.metric-icon{
+
+font-size:32px;
+
+margin-bottom:16px;
+
+}
+
+.metric-title{
+
+font-size:13px;
+
+letter-spacing:1px;
+
+text-transform:uppercase;
+
+color:#93a3b8;
+
+}
+
+.metric-value{
+
+margin-top:12px;
+
+font-size:
+clamp(
+22px,
+2vw,
+36px
+);
+
+font-weight:800;
+
+line-height:1.15;
+
+overflow-wrap:anywhere;
+
+word-break:break-word;
+
+}
+
+</style>
+""",
+        unsafe_allow_html=True,
+    )
+
     total_matches = get_total_matches(matches)
+
     total_seasons = get_total_seasons(matches)
-    team = get_most_successful_team(matches)
-    player = get_top_player(matches)
 
-    c1, c2, c3, c4 = st.columns(4)
+    team = _short(
+        get_most_successful_team(matches)
+    )
 
-    with c1:
+    player = _short(
+        get_top_player(matches)
+    )
+
+    row1 = st.columns(2)
+
+    with row1[0]:
+
         card(
-            "Total Matches",
-            total_matches,
             "🏏",
-            "#2563eb"
+            "Total Matches",
+            total_matches
         )
 
-    with c2:
+    with row1[1]:
+
         card(
-            "Total Seasons",
-            total_seasons,
             "📈",
-            "#7c3aed"
+            "Total Seasons",
+            total_seasons
         )
 
-    with c3:
+    row2 = st.columns(2)
+
+    with row2[0]:
+
         card(
-            "Top Team",
-            team,
             "🏆",
-            "#06b6d4"
+            "Top Team",
+            team
         )
 
-    with c4:
+    with row2[1]:
+
         card(
-            "Top Player",
-            player,
             "⭐",
-            "#f97316"
+            "Top Player",
+            player
         )

@@ -2,11 +2,11 @@ import streamlit as st
 import plotly.express as px
 
 
-# =========================
-# COMMON
-# =========================
+# =====================================
+# COMMON STYLE
+# =====================================
 
-def apply_style(fig):
+def style_chart(fig):
 
     fig.update_layout(
 
@@ -16,42 +16,42 @@ def apply_style(fig):
 
         plot_bgcolor="rgba(0,0,0,0)",
 
+        height=430,
+
         margin=dict(
-            l=10,
-            r=10,
-            t=20,
-            b=10
+            l=20,
+            r=20,
+            t=40,
+            b=20
         ),
-
-        height=440,
-
-        showlegend=False,
 
         font=dict(
-            size=13
+            size=12
         ),
 
-        hoverlabel=dict(
-            bgcolor="#0f172a"
-        ),
+        coloraxis_showscale=False,
 
         xaxis=dict(
-            showgrid=False,
-            zeroline=False
+            automargin=True,
+            showgrid=False
         ),
 
         yaxis=dict(
-            gridcolor=
-            "rgba(255,255,255,.05)"
-        )
+            automargin=True,
+            gridcolor="rgba(255,255,255,.06)"
+        ),
+    )
+
+    fig.update_traces(
+        cliponaxis=False
     )
 
     return fig
 
 
-# =========================
-# TEAMS
-# =========================
+# =====================================
+# TOP TEAMS
+# =====================================
 
 def render_top_teams_chart(matches):
 
@@ -59,22 +59,23 @@ def render_top_teams_chart(matches):
         "🏆 Top Teams"
     )
 
-    df = (
+    data = (
         matches["winner"]
         .dropna()
         .value_counts()
         .head(10)
+        .sort_values()
         .reset_index()
     )
 
-    df.columns = [
+    data.columns = [
         "Team",
         "Wins"
     ]
 
     fig = px.bar(
 
-        df,
+        data,
 
         x="Wins",
 
@@ -86,29 +87,27 @@ def render_top_teams_chart(matches):
 
         color="Wins",
 
-        color_continuous_scale="Blues"
-
+        color_continuous_scale="Blues",
     )
-
-    apply_style(fig)
 
     fig.update_traces(
-        textposition="outside"
+        textposition="inside"
     )
+
+    style_chart(fig)
 
     st.plotly_chart(
         fig,
         use_container_width=True,
         config={
-            "displayModeBar":
-            False
+            "displayModeBar": False
         }
     )
 
 
-# =========================
-# PLAYERS
-# =========================
+# =====================================
+# TOP PLAYERS
+# =====================================
 
 def render_top_players_chart(matches):
 
@@ -116,24 +115,23 @@ def render_top_players_chart(matches):
         "⭐ Top Players"
     )
 
-    df = (
-        matches[
-            "player_of_match"
-        ]
+    data = (
+        matches["player_of_match"]
         .dropna()
         .value_counts()
         .head(10)
+        .sort_values()
         .reset_index()
     )
 
-    df.columns = [
+    data.columns = [
         "Player",
         "Awards"
     ]
 
     fig = px.bar(
 
-        df,
+        data,
 
         x="Awards",
 
@@ -145,30 +143,27 @@ def render_top_players_chart(matches):
 
         color="Awards",
 
-        color_continuous_scale=
-        "Oranges"
-
+        color_continuous_scale="Oranges",
     )
-
-    apply_style(fig)
 
     fig.update_traces(
-        textposition="outside"
+        textposition="inside"
     )
+
+    style_chart(fig)
 
     st.plotly_chart(
         fig,
         use_container_width=True,
         config={
-            "displayModeBar":
-            False
+            "displayModeBar": False
         }
     )
 
 
-# =========================
-# TOSS
-# =========================
+# =====================================
+# TOSS IMPACT
+# =====================================
 
 def render_toss_impact_chart(matches):
 
@@ -176,113 +171,82 @@ def render_toss_impact_chart(matches):
         "🪙 Toss Impact"
     )
 
-    temp = (
-        matches
-        .dropna(
-            subset=[
-                "winner",
-                "toss_winner"
-            ]
-        )
-    )
-
-    temp[
-        "Outcome"
-    ] = (
-        temp[
-            "winner"
-        ]
-        ==
-        temp[
+    df = matches.dropna(
+        subset=[
+            "winner",
             "toss_winner"
         ]
     )
 
-    pie = (
-        temp[
-            "Outcome"
-        ]
+    result = (
+        (
+            df["winner"]
+            ==
+            df["toss_winner"]
+        )
         .value_counts()
         .reset_index()
     )
 
-    pie.columns = [
+    result.columns = [
         "Result",
         "Matches"
     ]
 
-    pie[
+    result["Result"] = result[
         "Result"
-    ] = (
-        pie[
-            "Result"
-        ]
-        .map({
+    ].map({
 
-            True:
-            "Won Toss",
+        True:
+        "Won Toss",
 
-            False:
-            "Lost After Toss"
+        False:
+        "Lost Toss"
 
-        })
-    )
+    })
 
     fig = px.pie(
 
-        pie,
+        result,
 
-        values=
-        "Matches",
+        names="Result",
 
-        names=
-        "Result",
+        values="Matches",
 
-        hole=.72,
+        hole=.55,
 
-        color=
-        "Result",
+        color="Result",
 
         color_discrete_map={
 
             "Won Toss":
-            "#10b981",
+            "#22c55e",
 
-            "Lost After Toss":
+            "Lost Toss":
             "#ef4444"
-
         }
-    )
-
-    fig.update_traces(
-        textinfo=
-        "percent"
     )
 
     fig.update_layout(
 
-        template=
-        "plotly_dark",
+        template="plotly_dark",
 
-        paper_bgcolor=
-        "rgba(0,0,0,0)",
+        height=430,
 
-        height=440
+        showlegend=True,
+
+        paper_bgcolor="rgba(0,0,0,0)"
     )
 
     st.plotly_chart(
         fig,
         use_container_width=True,
-        config={
-            "displayModeBar":
-            False
-        }
     )
 
 
-# =========================
-# MATCH TREND
-# =========================
+# =====================================
+# MATCH TRENDS
+# =====================================
 
 def render_matches_per_season_chart(matches):
 
@@ -290,22 +254,7 @@ def render_matches_per_season_chart(matches):
         "📈 Match Trends"
     )
 
-    if (
-        matches[
-            "season"
-        ]
-        .nunique()
-        <=
-        1
-    ):
-
-        st.info(
-            "Select ALL"
-        )
-
-        return
-
-    trend = (
+    chart = (
 
         matches
 
@@ -316,49 +265,35 @@ def render_matches_per_season_chart(matches):
         .size()
 
         .reset_index(
-            name=
-            "Matches"
+            name="Matches"
         )
     )
 
-    fig = px.area(
+    fig = px.line(
 
-        trend,
+        chart,
 
-        x=
-        "season",
+        x="season",
 
-        y=
-        "Matches",
+        y="Matches",
 
-        markers=
-        True
+        markers=True
+    )
+
+    fig.update_traces(
+        line_width=4
     )
 
     fig.update_layout(
 
-        template=
-        "plotly_dark",
+        template="plotly_dark",
 
-        paper_bgcolor=
-        "rgba(0,0,0,0)",
+        height=430,
 
-        plot_bgcolor=
-        "rgba(0,0,0,0)",
-
-        height=
-        440
+        paper_bgcolor="rgba(0,0,0,0)"
     )
 
     st.plotly_chart(
-
         fig,
-
-        use_container_width=
-        True,
-
-        config={
-            "displayModeBar":
-            False
-        }
+        use_container_width=True,
     )
