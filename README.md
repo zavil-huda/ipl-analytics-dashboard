@@ -94,7 +94,6 @@ Season growth and historical trends.
 
 ---
 
-:::writing{variant="standard" id="21483"}
 ## 📸 Dashboard Preview
 
 ### Dashboard Overview
