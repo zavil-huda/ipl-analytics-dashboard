@@ -317,7 +317,36 @@ with tab2:
 st.markdown(
 """
 
+Built & Designed by Zavil Huda Quraishi
+padding-bottom:10st.markdown(
+"""
+
 <br><br>
+
+<div
+style='
+text-align:center;
+opacity:.7;
+padding-bottom:10px;
+margin-top:-40px;
+'>
+
+Built & Designed by Zavil Huda Quraishi
+
+<br><br>
+
+Data • Design • Intelligence
+
+</div>
+
+""",
+unsafe_allow_html=True,
+)px;
+margin-top:-40px;padding-bottom:10px;
+margin-top:-40px;
+<br><br>
+
+Data • Design • Intelligence<br><br>
 
 <div
 style='
