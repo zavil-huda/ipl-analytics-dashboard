@@ -11,8 +11,14 @@ if str(SRC_DIR) not in sys.path:
 import streamlit as st
 
 from ipl_dashboard.data_loader import load_matches
-from ipl_dashboard.components.sidebar import render_sidebar
-from ipl_dashboard.components.kpi_cards import render_kpi_cards
+
+from ipl_dashboard.components.sidebar import (
+    render_sidebar,
+)
+
+from ipl_dashboard.components.kpi_cards import (
+    render_kpi_cards,
+)
 
 from ipl_dashboard.components.charts import (
     render_top_teams_chart,
@@ -30,6 +36,7 @@ st.set_page_config(
     page_title="IPL Analytics Dashboard",
     page_icon="🏏",
     layout="wide",
+    initial_sidebar_state="expanded",
 )
 
 
@@ -44,84 +51,62 @@ st.markdown(
 .stApp{
 
 background:
-radial-gradient(
-circle at top,
-#07152f 0%,
-#020617 45%,
-#01040b 100%
+
+linear-gradient(
+180deg,
+#010814,
+#020d1f,
+#010814
 );
 
-color:white;
-
 }
+
 
 .block-container{
 
 max-width:1500px;
 
-padding-top:30px;
+padding-top:2rem;
 
-padding-left:40px;
-
-padding-right:40px;
-
-}
-
-
-section[data-testid="stSidebar"]{
-
-background:
-
-linear-gradient(
-180deg,
-#07111f,
-#04101d
-);
-
-border-right:
-1px solid rgba(255,255,255,.06);
+padding-bottom:4rem;
 
 }
 
 
 .hero{
 
+padding:42px;
+
+border-radius:32px;
+
 background:
 
 linear-gradient(
 135deg,
-rgba(24,38,79,.95),
-rgba(5,10,20,.95)
+rgba(17,24,39,.96),
+rgba(4,8,18,.98)
 );
-
-padding:42px;
-
-border-radius:34px;
-
-margin-bottom:22px;
 
 border:
 
-1px solid rgba(255,255,255,.08);
+1px solid rgba(255,255,255,.06);
 
-box-shadow:
-
-0 20px 60px rgba(0,0,0,.35);
+margin-bottom:28px;
 
 }
 
 
 .hero h1{
 
+margin:0;
+
 font-size:
 
 clamp(
-44px,
-4vw,
+40px,
+5vw,
 72px
 );
-
-margin:0;
 
 line-height:1.05;
 
@@ -134,21 +119,14 @@ margin-top:14px;
 
 font-size:18px;
 
-opacity:.75;
+opacity:.82;
 
 }
 
 
-hr{
+div[data-testid="stTabs"]{
 
-display:none;
-
-}
-
-
-.stTabs [data-baseweb="tab"]{
-
-font-size:15px;
+margin-top:16px;
 
 }
 
@@ -160,8 +138,7 @@ visibility:hidden;
 }
 
 
-
-@media(max-width:1200px){
+@media(max-width:1100px){
 
 .block-container{
 
@@ -173,13 +150,7 @@ padding-right:18px;
 
 .hero{
 
-padding:30px;
-
-}
-
-.hero h1{
-
-font-size:48px;
+padding:28px;
 
 }
 
@@ -192,29 +163,7 @@ unsafe_allow_html=True,
 
 
 # ==================================================
-# HERO
-# ==================================================
-
-st.markdown(
-"""
-<div class='hero'>
-
-<h1>
-🏏 IPL Analytics Dashboard
-</h1>
-
-<p>
-Interactive Cricket Intelligence Platform
-</p>
-
-</div>
-""",
-unsafe_allow_html=True,
-)
-
-
-# ==================================================
-# LOAD
+# LOAD DATA
 # ==================================================
 
 try:
@@ -223,33 +172,74 @@ try:
 
 except Exception as e:
 
-    st.error(f"Error loading data: {e}")
+    st.error(
+        f"Data load failed: {e}"
+    )
 
     st.stop()
+
+
+# ==================================================
+# SIDEBAR
+# ==================================================
+
+filters = render_sidebar(
+    matches
+)
+
+selected_season = filters[
+    "season"
+]
 
 
 # ==================================================
 # FILTER
 # ==================================================
 
-filters = render_sidebar(matches)
-
-season = filters["season"]
-
-if season != "All":
+if selected_season != "All":
 
     filtered = (
+
         matches[
-            matches["season"]
+            matches[
+                "season"
+            ]
             ==
-            season
+            selected_season
         ]
+
         .copy()
+
     )
 
 else:
 
     filtered = matches.copy()
+
+
+# ==================================================
+# HERO
+# ==================================================
+
+st.markdown(
+"""
+<div class="hero">
+
+<h1>
+🏏 IPL Analytics Dashboard
+</h1>
+
+<p>
+
+Explore IPL history through
+interactive analytics.
+
+</p>
+
+</div>
+""",
+unsafe_allow_html=True,
+)
 
 
 # ==================================================
@@ -260,53 +250,67 @@ render_kpi_cards(
     filtered
 )
 
-
-st.markdown("<br>", unsafe_allow_html=True)
+st.markdown(
+"<br>",
+unsafe_allow_html=True
+)
 
 
 # ==================================================
-# TABS
+# ANALYTICS
 # ==================================================
 
-tab1, tab2 = st.tabs([
+tab1, tab2 = st.tabs(
+[
 "📊 Analytics",
-"📈 Trends"
-])
+"📈 Insights"
+]
+)
 
+
+# ==================================================
+# TAB 1
+# ==================================================
 
 with tab1:
 
-    col1, col2 = st.columns(2)
+    left, right = st.columns(
+        2
+    )
 
-    with col1:
+    with left:
 
         render_top_teams_chart(
             filtered
         )
 
-    with col2:
+    with right:
 
         render_top_players_chart(
             filtered
         )
 
 
+# ==================================================
+# TAB 2
+# ==================================================
+
 with tab2:
 
-    col3, col4 = st.columns(2)
+    left, right = st.columns(
+        2
+    )
 
-    with col3:
+    with left:
 
         render_toss_impact_chart(
             filtered
         )
 
-    with col4:
+    with right:
 
         render_matches_per_season_chart(
-            matches
-            if season == "All"
-            else filtered
+            filtered
         )
 
 
@@ -315,54 +319,27 @@ with tab2:
 # ==================================================
 
 st.markdown(
-"""
+    """
+    <div
+    style="
+    text-align:center;
+    opacity:0.7;
+    padding-top:10px;
+    padding-bottom:10px;
+    margin-top:-40px;
+    ">
 
-Built & Designed by Zavil Huda Quraishi
-padding-bottom:10st.markdown(
-"""
+    <div style="font-size:20px;font-weight:600;">
+    Built & Designed by Zavil Huda Quraishi
+    </div>
 
-<br><br>
+    <br>
 
-<div
-style='
-text-align:center;
-opacity:.7;
-padding-bottom:10px;
-margin-top:-40px;
-'>
+    <div style="font-size:14px;">
+    Data • Design • Intelligence
+    </div>
 
-Built & Designed by Zavil Huda Quraishi
-
-<br><br>
-
-Data • Design • Intelligence
-
-</div>
-
-""",
-unsafe_allow_html=True,
-)px;
-margin-top:-40px;padding-bottom:10px;
-margin-top:-40px;
-<br><br>
-
-Data • Design • Intelligence<br><br>
-
-<div
-style='
-text-align:center;
-opacity:.7;
-padding-bottom:30px;
-'>
-
-Built with ❤️
-
-<br>
-
-Python • Pandas • Plotly • Streamlit
-
-</div>
-
-""",
-unsafe_allow_html=True,
+    </div>
+    """,
+    unsafe_allow_html=True,
 )
