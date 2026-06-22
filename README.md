@@ -12,7 +12,7 @@ Designed to make cricket analytics simple, visual, and interactive.
 
 View the deployed application:
 
-https://ipl-analytics-dashboard-iemu7xm3qknpjk45z23mtu.streamlit.app/#ipl-analytics-dashboard
+https://ipl-analytics-dashboard-iemu7xm3qknpjk45z23mtu.streamlit.app/
 
 ---
 
@@ -117,18 +117,6 @@ Season growth and historical trends.
 ### Toss Analysis
 
 ![Toss Analysis](Assets/toss_dashboard.png)
-:::
-
-Bas.
-
-GitHub automatically `Assets/...png` render kar dega.
-
-Then:
-
-```bash
-git add README.md
-git commit -m "Add dashboard screenshots"
-git push
 
 ---
 
