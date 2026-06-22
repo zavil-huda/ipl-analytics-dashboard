@@ -319,32 +319,33 @@ with tab2:
 # ==================================================
 
 st.markdown(
-    """
-    <div style="
-        text-align:center;
-        opacity:0.78;
-        margin-top:80px;
-        padding-bottom:25px;
-    ">
+"""
+<div style="
+width:100%;
+text-align:center;
+margin-top:140px;
+padding-bottom:35px;
+opacity:0.82;
+">
 
-        <div style="
-            font-size:16px;
-            font-weight:600;
-            color:#f2f2f2;
-        ">
-            Built & Designed by Zavil Huda Quraishi
-        </div>
+<div style="
+font-size:14px;
+font-weight:600;
+color:#f3f4f6;
+">
+Built & Designed by Zavil Huda Quraishi
+</div>
 
-        <div style="
-            margin-top:8px;
-            font-size:11px;
-            color:#7f8896;
-            letter-spacing:0.8px;
-        ">
-            Data • Design • Intelligence
-        </div>
+<div style="
+margin-top:6px;
+font-size:10px;
+color:#7f8896;
+letter-spacing:1px;
+">
+Data • Design • Intelligence
+</div>
 
-    </div>
-    """,
-    unsafe_allow_html=True,
+</div>
+""",
+unsafe_allow_html=True
 )
