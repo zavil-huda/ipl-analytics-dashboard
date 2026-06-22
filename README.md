@@ -94,25 +94,42 @@ Season growth and historical trends.
 
 ---
 
+:::writing{variant="standard" id="21483"}
 ## 📸 Dashboard Preview
 
-Place screenshots inside:
+### Dashboard Overview
 
-```plaintext
-Assets/
-```
-
-Then use:
-
-```md
 ![Dashboard](Assets/player_dashboard.png)
+
+---
+
+### Season Insights
 
 ![Season Insights](Assets/season_growth.png)
 
+---
+
+### Team Analytics
+
 ![Team Analytics](Assets/team_wins_dashboard.png)
 
+---
+
+### Toss Analysis
+
 ![Toss Analysis](Assets/toss_dashboard.png)
-```
+:::
+
+Bas.
+
+GitHub automatically `Assets/...png` render kar dega.
+
+Then:
+
+```bash
+git add README.md
+git commit -m "Add dashboard screenshots"
+git push
 
 ---
 
