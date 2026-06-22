@@ -1,75 +1,118 @@
 # 🏏 IPL Analytics Dashboard
 
-Interactive Cricket Intelligence Platform built using Streamlit, Pandas, and Plotly.
+Interactive Cricket Intelligence Platform built using Streamlit, Python, Pandas, and Plotly.
 
-A responsive analytics dashboard designed to explore IPL match insights across seasons (2008–2024) with dynamic KPIs and interactive visualizations.
+A modern analytics dashboard designed to explore IPL match performance, trends, and insights across seasons through interactive visualizations and data storytelling.
+
+Designed to make cricket analytics simple, visual, and interactive.
+
+---
+
+## 🚀 Live Demo
+
+View the deployed application:
+
+https://ipl-analytics-dashboard-iemu7xm3qknpjk45z23mtu.streamlit.app/#ipl-analytics-dashboard
+
+---
+
+## 📌 Project Overview
+
+IPL Analytics Dashboard helps users explore Indian Premier League data through interactive visualizations and performance insights.
+
+Users can:
+
+* Explore season-wise IPL performance
+* Analyze top teams and players
+* Understand toss impact
+* Track match trends across seasons
+* Filter and interact with dashboard components
 
 ---
 
 ## ✨ Features
 
-* Season-wise filtering (2008–2024)
+### 📊 Interactive Analytics
+
+* Season-wise filtering
 * Dynamic KPI cards
-* Top Winning Teams Analysis
-* Top Players (Player of Match)
-* Toss Impact Analysis
-* Match Trends Visualization
 * Interactive charts
-* Responsive dashboard UI
-* Portfolio-ready project structure
+* Real-time visual exploration
+
+### 🏆 Team Insights
+
+* Top winning teams analysis
+* Team performance comparison
+
+### 👑 Player Analytics
+
+* Player of Match analysis
+* Player performance insights
+
+### 🎯 Match Intelligence
+
+* Toss impact analysis
+* Match trends visualization
+* Season growth analytics
+
+### 🎨 Modern Dashboard Experience
+
+* Dark theme UI
+* Responsive layout
+* Portfolio-ready architecture
 
 ---
 
-## 📊 Dashboard Preview
+## 🧠 KPI Metrics Included
 
-(Add screenshots here later)
-
-Examples:
-
-* Hero Dashboard View
-* Analytics Tab
-* Trends Tab
-* Season Filter Demo
+| Metric        | Description                       |
+| ------------- | --------------------------------- |
+| Total Matches | Total matches for selected season |
+| Total Seasons | Available seasons                 |
+| Top Team      | Highest performing team           |
+| Top Player    | Most Player of Match awards       |
 
 ---
 
-## 🧠 KPIs Included
-
-### Total Matches
-
-Displays total matches for selected season.
-
-### Total Seasons
-
-Shows available seasons.
-
-### Top Team
-
-Most successful team.
-
-### Top Player
-
-Most Player of Match awards.
-
----
-
-## 📈 Analytics
+## 📈 Analytics Modules
 
 ### Top Teams
 
-Bar chart showing winning teams.
+Visual comparison of winning teams.
 
 ### Top Players
 
-Player performance comparison.
+Player performance exploration.
 
 ### Toss Impact
 
-Win probability after toss.
+Analyze toss influence on outcomes.
 
 ### Match Trends
 
-Season growth visualization.
+Season growth and historical trends.
+
+---
+
+## 📸 Dashboard Preview
+
+Place screenshots inside:
+
+```plaintext
+Assets/
+```
+
+Then use:
+
+```md
+![Dashboard](Assets/player_dashboard.png)
+
+![Season Insights](Assets/season_growth.png)
+
+![Team Analytics](Assets/team_wins_dashboard.png)
+
+![Toss Analysis](Assets/toss_dashboard.png)
+```
 
 ---
 
@@ -83,55 +126,84 @@ Season growth visualization.
 ### Processed Data
 
 * matches_clean.csv
+* team_wins.csv
 
-Contains:
+Includes:
 
 * Season
 * Teams
 * Venue
 * Winner
 * Player of Match
-* Toss Data
+* Toss Information
 * Match Statistics
 
 ---
 
 ## 🛠 Tech Stack
 
-Frontend:
+### Frontend
 
 * Streamlit
 
-Backend:
+### Backend
 
 * Python
 
-Data:
+### Data Processing
 
 * Pandas
 * NumPy
 
-Visualization:
+### Visualization
 
 * Plotly
+* Matplotlib
+
+### Development
+
+* Git
+* GitHub
 
 ---
 
-## 🚀 Installation
+## 📂 Project Structure
 
-Clone repository:
-
-```bash
-git clone <your-github-link>
+```plaintext
+IPL Analytics Dashboard
+│
+├── Dashboard/
+│   └── app.py
+│
+├── Data/
+│   ├── Raw/
+│   └── Processed/
+│
+├── src/
+│   └── ipl_dashboard/
+│
+├── Assets/
+├── requirements.txt
+└── README.md
 ```
 
-Open project:
+---
+
+## ⚙️ Run Locally
+
+Clone:
+
+```bash
+git clone https://github.com/zavil-huda/ipl-analytics-dashboard.git
+```
+
+Move into project:
 
 ```bash
 cd IPL-Analytics-Dashboard
 ```
 
-Install dependencies:
+Install:
 
 ```bash
 pip install -r requirements.txt
@@ -140,32 +212,35 @@ pip install -r requirements.txt
 Run:
 
 ```bash
-python3 -m streamlit run Dashboard/app.py
+streamlit run Dashboard/app.py
 ```
 
 ---
 
-## 📌 Future Improvements
+## 🔮 Future Improvements
 
-* Head-to-head comparison
-* Venue analytics
-* Player profile pages
-* Win prediction
-* Mobile optimization
-* Deployment monitoring
+* Player Search
+* Team Comparison
+* Venue Analytics
+* Export Charts
+* Mobile Optimization
+* Advanced Insights
+* AI-powered Predictions
 
 ---
 
 ## 👨‍💻 Author
 
-Zavil Huda Quraishi
+Built & Designed by **Zavil Huda Quraishi**
 
-UI/UX • AI • Data Analytics
+Data • Design • Intelligence
 
 ---
 
 ## ⭐ Support
 
-If you like this project:
+If you found this project useful:
 
-Star the repository.
+⭐ Star the repository
+📢 Share feedback
+🚀 Explore the dashboard
