@@ -318,33 +318,40 @@ with tab2:
 # FOOTER
 # ==================================================
 
-st.markdown(
-"""
+st.markdown("""
 <div style="
 text-align:center;
-opacity:0.78;
-margin-top:-90px;
-padding-bottom:8px;
+opacity:0.55;
+
+margin-top:35px;
+
+padding-top:10px;
+padding-bottom:25px;
 ">
 
 <div style="
-font-size:20px;
-font-weight:600;
-color:#f2f2f2;
+font-size:14px;
+font-weight:500;
+color:#d6d6d6;
 ">
+
 Built & Designed by Zavil Huda Quraishi
-</div>
 
-<br>
+</div>
 
 <div style="
-font-size:13px;
-color:#9ea6b2;
+margin-top:8px;
+
+font-size:11px;
+
+color:#7f8896;
+
+letter-spacing:0.8px;
 ">
+
 Data • Design • Intelligence
+
 </div>
 
 </div>
-""",
-unsafe_allow_html=True,
-)
+""", unsafe_allow_html=True)
